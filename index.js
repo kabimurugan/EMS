@@ -8,13 +8,15 @@ import employeeRoutes from "./routes/employee.js";
 import dotenv from "dotenv"
 dotenv.config()
 
-import connectToDatabase from "./DataBAse/Db.js"
+import connectToDatabase from "./DataBase/db.js"
 
 connectToDatabase()
 
 const app = express()
 app.use(cors())
 app.use(express.json())
+app.get("/test", (req, res) => res.send("Server is live"));
+
 
 app.use('/api/auth', authRouter)
 app.use('/api/department', departmentRouter)
