@@ -3,7 +3,7 @@ import cors from "cors"
 import authRouter from "./routes/auth.js"
 import departmentRouter from './routes/department.js'
 import employeeRoutes from "./routes/employee.js";
-import connectToDataBase from './database/db.js';
+import connectToDataBase from './database/db.js'
 
 
 import dotenv from "dotenv"
