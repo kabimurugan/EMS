@@ -8,7 +8,7 @@ import employeeRoutes from "./routes/employee.js";
 import dotenv from "dotenv"
 dotenv.config()
 
-import connectToDatabase from "./DataBase/db.js"
+import connectToDatabase from "./Database/db.js"
 
 connectToDatabase()
 
