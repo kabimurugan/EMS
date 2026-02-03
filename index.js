@@ -3,14 +3,13 @@ import cors from "cors"
 import authRouter from "./routes/auth.js"
 import departmentRouter from './routes/department.js'
 import employeeRoutes from "./routes/employee.js";
+import connectToDataBase from './database/db.js';
 
 
 import dotenv from "dotenv"
 dotenv.config()
 
-import connectToDatabase from "./Database/db.js"
-
-connectToDatabase()
+connectToDataBase()
 
 const app = express()
 app.use(cors())
