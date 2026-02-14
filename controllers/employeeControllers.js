@@ -1,6 +1,5 @@
 import Employee from "../models/Employee.js";
 import bcrypt from "bcrypt";
-
 export const addEmployee = async (req, res) => {
   try {
     const {
@@ -45,13 +44,16 @@ export const addEmployee = async (req, res) => {
       gender,
       marital_status,
       designation,
-      image: req.file ? req.file.filename : null,
+      image: req.file ? req.file.path : null, // ✅ FIXED
     });
 
     res.status(201).json({
       message: "Employee added successfully",
       employee,
     });
+
+    console.log(req.file);
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

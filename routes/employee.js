@@ -9,7 +9,7 @@ router.get('/', authMiddleware, getEmployees)
 router.post("/add" ,authMiddleware, upload.single("image"), addEmployee);
 
 router.get("/:id", authMiddleware, getEmployee)
-router.put("/:id",upload.single("image"),  authMiddleware, updateEmployee)
+router.put("/:id", authMiddleware, upload.single("image"), updateEmployee);
 router.delete("/:id", authMiddleware, deleteEmployee)
 
 export default router;
