@@ -1,5 +1,7 @@
 import Employee from "../models/Employee.js";
 import bcrypt from "bcrypt";
+import cloudinary from "../models/cloudinary.js";
+
 export const addEmployee = async (req, res) => {
   try {
     const {
@@ -16,18 +18,21 @@ export const addEmployee = async (req, res) => {
       designation,
     } = req.body;
 
-    if (!name || !email || !password || !employee_id) {
-      return res.status(400).json({ message: "Required fields missing" });
-    }
+    let imageUrl = null;
 
-    const existing = await Employee.findOne({
-      $or: [{ email }, { employee_id }],
-    });
-
-    if (existing) {
-      return res.status(409).json({
-        message: "Employee already exists",
+    if (req.file) {
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "uploads" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        stream.end(req.file.buffer);
       });
+
+      imageUrl = result.secure_url;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -44,7 +49,7 @@ export const addEmployee = async (req, res) => {
       gender,
       marital_status,
       designation,
-      image: req.file ? req.file.path : null, // ✅ FIXED
+      image: imageUrl,
     });
 
     res.status(201).json({
@@ -52,9 +57,8 @@ export const addEmployee = async (req, res) => {
       employee,
     });
 
-    console.log(req.file);
-
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
